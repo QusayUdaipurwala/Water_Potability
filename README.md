@@ -48,3 +48,14 @@ The turbidity of water depends on the quantity of solid matter present in the su
 
 10. **Potability**:
 Indicates if water is safe for human consumption where 1 means Potable and 0 means Not potable.
+
+
+### Stage 1: Importing and Processing the Data
+
+One of the starting steps that we are going to take is downloading and importing our dataset into our Jupyter Notebook in a format in which we can easily make changes and read our data. That can be achieved by making use of a popular library in Python known as pandas. We can easily clean, transform, and impute data according to our needs using the popular DataFrame data structure in the Pandas library.
+
+After importing the dataset as a pandas dataframe we used various inbuild techniques of the dataframe such as `info()` and `describe()` to get a overall information about the dataset such as how many rows are present in the dataframe, what are the various statistical values of differnt attributes in the dataset such as Count, Mean, Median, Mode, quartiles(1st,2nd,3rd), Min value, Max value.
+
+Then we used the `isna()` and the `sum()` methods to figure out which attributes have null values and how many null values are there in them. This gave us valuable information that there are mainly three attributes that have Null values in them, they are `ph` with 491 null values, `Sulfate` with the highest number of null values 781 and lastly `Trihalomethanes` with 162 null values.
+
+<img width="1000" height="648" alt="image" src="https://github.com/user-attachments/assets/ec95d1bf-eb6d-406a-9e1c-c9aad9996d6c" />
