@@ -61,3 +61,25 @@ We then checked for missing values using the `isna()` and `sum()` functions. The
 <img width="1000" height="648" alt="image" src="https://github.com/user-attachments/assets/ec95d1bf-eb6d-406a-9e1c-c9aad9996d6c" />
 
 Imputation techniques were performed in order to handle the missing values. Numerical imputation is typically done using strategies like Mean, Median, and Mode. Mean imputation works best when the data follows a normal distribution with a limited number of outliers. Mode is mostly applied to categorical attributes. However, median imputation will work better for the data containing skewed distributions and outliers because of its insensitivity to extreme values. Since features such as Sulfate are rather highly variable and sometimes include skewed values, median imputation was the best and most reliable option for our data. Thus, we replaced the missing values in those columns by the median of the respective attribute.
+
+### Stage 2: Exploratory Data Analysis
+
+In this section we are going to visualize various plots using Python libraries such as matplotlib and seaborn. Our main aim in this section is to understand our data in detail using different plots; visualization makes a big difference in understanding our data. If we just stare at the numbers and data that are present in our dataset to understand what is happening, then that is going to take a lot of time and effort. That is why we use visualization; when we visually plot our data, it becomes more clear what our data is saying and how the different attributes correlate with our target variable, which is the potability of water.
+
+<img width="1253" height="406" alt="image" src="https://github.com/user-attachments/assets/7b5aa87b-89b8-4211-a67c-cacde233161d" />
+
+The `describe()` function in pandas is one of the most used and the most important functions out there; it gives us a lot of information in terms of data and values. It helps us understand the distribution, spread, and potential outliers that are present in our dataset.
+
+1. Distribution:
+
+The mean value that is present for each and every attribute represents the central tendency of that feature. If the central tendency or the mean is much higher than the median (50% value) of the feature, then that suggests the data might be skewed. The min and max values of every feature tell us about the maximum and the minimum values that are present in the feature; they give us an idea about the spread of the data. These different statistics (`min`, `max`, `mean`, and `median`), when compared with each other, help us understand whether the data is symmetrical, skewed, or contains extreme values.
+
+2. Spread:
+
+The standard deviation helps us understand the spread of the data in that particular attribute. If the standard deviation is high, then the values are more spread apart from one another; if the standard deviation is lower, that suggests that the values are closer to each other and more clustered around the mean value.
+
+The different quartiles, 25%, 50%, and 75%, tell us about how the data or values are spread across the feature. If the range between the 25% percentile and 75% percentile, basically the interquartile range, is high, then the overall variability of that feature is high, and vice versa.
+
+3. Potential outliers:
+
+We can also figure out the amount of potential outliers that can be present in our dataset by making use of the interquartile rule. The rule states that outliers are generally less than 25% - 1.5 x IQR and greater than 75% + 1.5 x IQR. If the maximum value of a feature is way greater than the 75% percentile, then that suggests there may be outliers present in the higher-end values of the feature, and if the minimum value is way less than the 25% percentile, then that suggests there may be outliers present in the lower-end values of the feature.
