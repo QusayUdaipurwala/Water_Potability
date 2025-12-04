@@ -138,6 +138,29 @@ Here also is a great example that shows us how visualization makes a difference.
 
 The analysis of pairplot shows that the data contains features that are fairly uncorrelated and also there is a strong overlap between potable and non-potable classes. None of the feature pairs are able to visually discriminate between classes, and most of the univariate distributions show heavy overlap in density curves. Therefore, this finally confirms that the water potability classification is a pretty complex nonlinear problem, with weak predictive power of individual features. Hence, tree-based ensemble models (Random Forest, XGBoost) and nonlinear classifiers such as SVM with RBF kernel would be better suited than linear models.
 
+## Stage 3: Model Training and Evaluation
+
+After understanding the structure and quality of our dataset through EDA, building predictive models for water potability will be the next step. Since our features contain skewed numerical distributions, several outliers, and a target variable that is a little imbalanced, model performance will vary significantly depending on the algorithm's assumptions and robustness.
+
+In order to evaluate this fairly, we experiment with a set of diverse machine learning models: both linear and non-linear algorithms. We also include one model that isn't expected to work well for this dataset, aiming to evoke an understanding of how several algorithms fail whenever their assumptions are violated.
+
+The models we are going to evaluate include:
+1. Logistic Regression
+2. Support Vector Machine
+3. Gaussian NB
+4. DecisionTreeClassifier
+5. Random Forest Classifier
+
+we will split our data into training set and testing set with a ratio of 80% to 20%. Where 80% data is used for training the model and 20% data is used to test the model then we are going to stadardize our training data set because some models perform better when the data is on the same scale such as Logistic Regression, SVM, and Gaussian NB. To answer the question of why we are splitting the data and then standardizing the data is because of data leakage. If we did the opposite where we standardized our data and then splitted the result would be that the model would learn about the testing data even before the testing were to begin this is called data leakage!.
+
+**1. Logistic Regression:**
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/f6743e88-09ef-4f1e-b59b-72eedb1aecfb" />
+
+<img width="530" height="178" alt="image" src="https://github.com/user-attachments/assets/70041c76-deeb-4d78-9eca-ec1500d462a8" />
+
+The Logistic Regression model gave a good baseline but did not perform well on this classification task. From the confusion matrix (TN = 211, TP = 118, FP = 201, FN = 126), we can tell that the model struggles to correctly classify both classes and, in particular, class 1 examples representing potable water samples. Such a high number of false positives (201) and false negatives (126) means that the decision boundary learned by Logistic Regression fails to capture the underlying patterns in the data. This is somewhat expected because the relationships present in this dataset are very likely nonlinear and influenced by several features that interact with one another. Overall, the model indicates that simple linear classifiers are insufficient for this problem and more powerful models like Decision Trees, Random Forests, and Gradient Boosting should be tried.
+
 
 
 
