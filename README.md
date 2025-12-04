@@ -207,7 +207,7 @@ Hyperparameter tuning will help us in arriving at the most suitable setting for 
 
 After the application of hyperparameter tuning with GridSearchCV, there was an improvement in the performance of the Support Vector Machine model from its default setting. The tuned SVM reached an accuracy of 67%, with a significant boost in precision and F1-score for the potable water class (class 1). The model was highly reliable in classifying non-potable water, achieving as high as 79% recall for class 0. The prediction of potable water remains high, with the recall for class 1 at just 46%, meaning that it still missed most of the true potable cases. The tuned model gave 325 true negatives and 112 true positives, thus showing an improved balance but still biased toward the majority class. Generally speaking, the tuning improved the generalization capability of the SVM and thereby its ability to detect more potable samples compared to the untuned version, though the class imbalance problem continues to affect performance.
 
-**2. Random Forest Regression**
+**2. Random Forest Classifier**
 
 <img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/70336b2d-8203-4f11-85e1-941879e836ae" />
 
