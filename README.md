@@ -161,6 +161,88 @@ we will split our data into training set and testing set with a ratio of 80% to 
 
 The Logistic Regression model gave a good baseline but did not perform well on this classification task. From the confusion matrix (TN = 211, TP = 118, FP = 201, FN = 126), we can tell that the model struggles to correctly classify both classes and, in particular, class 1 examples representing potable water samples. Such a high number of false positives (201) and false negatives (126) means that the decision boundary learned by Logistic Regression fails to capture the underlying patterns in the data. This is somewhat expected because the relationships present in this dataset are very likely nonlinear and influenced by several features that interact with one another. Overall, the model indicates that simple linear classifiers are insufficient for this problem and more powerful models like Decision Trees, Random Forests, and Gradient Boosting should be tried.
 
+**2. Support Vector Mechnine**
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/33e8a7fd-0052-4588-ab22-eb3f488f77c5" />
+
+<img width="547" height="176" alt="image" src="https://github.com/user-attachments/assets/18b85a64-78b5-475d-89f5-05958e5eb2c3" />
+
+After training the SVM model, there was a considerable improvement from the Logistic Regression model in terms of capturing the complexity of the dataset. In this case, the accuracy was 64%, performing strongly on class 0 at an F1-score of 0.71. It also performed above average for class 1 with an F1-score of 0.52. The confusion matrix results indicate that this model has correctly predicted 290 non-potable and 129 potable samples. However, it has also made a very critical mistake of predicting 122 unsafe water samples as safe, which would be considered a high false positive rate in real-world scenarios, and it also misclassified 115 safe samples as unsafe.
+
+**3. Gaussian Naive Bayes**
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/1aa35abc-9fee-464b-93e2-b06855f77a11" />
+
+<img width="538" height="187" alt="image" src="https://github.com/user-attachments/assets/cb8bccf5-2bf3-4e34-8f99-d7a10bc2dd6a" />
+
+After training the Gaussian Naive Bayes model, we found that while it had an overall accuracy of 63%, this performance was very imbalanced between the two classes. The model performed well on the non-potable class, with high recall (0.87) and high F1-score (0.75), meaning that it is very reliable at discerning unsafe water samples. The predicted performance on the potable class was significantly weaker, with recall at 0.21 and F1-score at 0.30, which means the model has incorrectly classified a large number of safe water samples as unsafe (192 false negatives). These results point to Gaussian Naive Bayes not being the best fit for this dataset because of its assumptions of normal distribution and feature independence that are far from what is actually observed in the structure and skewness of our data. Although it can be trusted for the detection of unsafe water, it would not be a good choice when classifying potable water accurately is of interest.
+
+**4. Decision Tree Classifier**
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/2edb8600-b571-4c52-83b4-68045d4ee57b" />
+
+<img width="516" height="180" alt="image" src="https://github.com/user-attachments/assets/8fcfbfad-ff85-4b56-8be1-50dc3aa01adc" />
+
+The Decision Tree Classifier produced an accuracy of 58%, lower compared to our previous models. The confusion matrix shows that the model performed moderately in predicting non-potable water (TN = 254), but it generated a high number of false positives (FP = 158), which means many unsafe water samples were predicted as safe. Though it captured 51% recall for potable water, the precision to this class was only 44%, meaning that there is frequent misclassification when predicting safe water. Overall, this Decision Tree struggled to generalize well and showed some signs of overfitting, which is common for unpruned trees. These results indicate that the basic Decision Tree model is not very reliable on this dataset, and its performance can get better by the application of some hyperparameter tuning-like limitations of depth or pruning techniques-or even by switching to ensemble methods such as Random Forest.
+
+**5. Random Forest Classification**
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/a3152c71-a34a-4158-bc75-22ed791e9ed2" />
+
+<img width="531" height="182" alt="image" src="https://github.com/user-attachments/assets/ffb217ff-93e4-4a6d-8981-37296de77c32" />
+
+Training of the Random Forest Classifier provided insights into the capacity of ensemble methods in handling the Water Potability dataset. It achieved an accuracy of 67%, outperforming previous models developed to this date. This demonstrates that the complex nonlinear relationship within the data is effectively modeled by the Random Forest. Most impressively, its performance was strong on the "Not Potable" class, with a recall of 0.85 and an F1-score of 0.77, showing high capability in classifying unsafe water. However, similar to the previous models, the "Potable" class was adversely affected by class imbalance with a recall of only 0.38. Results here indicate that while the Random Forest exhibits robustness and stability, further enhancements may be necessary through techniques such as class balancing or feature engineering to improve the model's capability for the correct identification of positive drinkable water samples.
+
+### Hyperparameter Tuning
+
+We trained and evaluated multiple models and found out their metrics such as accuracy, precision, recall, f1-score, True Negative, False Positive, False Negative, True Positive and after analysing them we figured out the two best performing models which were SVM and Random Forest Classifier. We are now going to perform Hyperparameter Tuning to further enchance these models performance, their ability to correctly predict the potability of water.
+
+**1. Support Vector Machine (Hyperparameter Tuning)**
+
+Hyperparameter tuning will help us in arriving at the most suitable setting for SVM through different combinations of parameters such as C, kernel, gamma, and degree. We use GridSearchCV that automatically tests all combinations using cross-validation and picks the best performing model. Likewise, to ensure proper scaling and avoid data leakage, we make sure we go with a Pipeline.
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/2c3d11a4-9e45-4829-9a2d-b0ffd74024dc" />
+
+<img width="519" height="183" alt="image" src="https://github.com/user-attachments/assets/5e818fd6-fb3e-4559-af9d-26adbaa92b02" />
+
+After the application of hyperparameter tuning with GridSearchCV, there was an improvement in the performance of the Support Vector Machine model from its default setting. The tuned SVM reached an accuracy of 67%, with a significant boost in precision and F1-score for the potable water class (class 1). The model was highly reliable in classifying non-potable water, achieving as high as 79% recall for class 0. The prediction of potable water remains high, with the recall for class 1 at just 46%, meaning that it still missed most of the true potable cases. The tuned model gave 325 true negatives and 112 true positives, thus showing an improved balance but still biased toward the majority class. Generally speaking, the tuning improved the generalization capability of the SVM and thereby its ability to detect more potable samples compared to the untuned version, though the class imbalance problem continues to affect performance.
+
+**2. Random Forest Regression**
+
+<img width="539" height="455" alt="image" src="https://github.com/user-attachments/assets/70336b2d-8203-4f11-85e1-941879e836ae" />
+
+<img width="505" height="174" alt="image" src="https://github.com/user-attachments/assets/16a47c83-4d63-40ff-a6a9-1c2b7e8d0b76" />
+
+The Random Forest Classifier achieved an accuracy of 0.69 after hyperparameter tuning, which shows a small improvement compared to the untuned version. The classifier achieved its best results with class 0 through a recall score of 0.88 and an F1-score of 0.78. This proves the model successfully detects most of the class 0 examples. The system shows weak performance with class 1 because it achieved a recall score of 0.37 and an F1-score of 0.47. The model maintains a high number of false negatives because it produces 154 incorrect positive case predictions. The model demonstrates higher precision rates for both classes after tuning, but class 1 recall continues to be difficult because of class distribution within the dataset. Hyperparameter tuning resulted in a small performance boost, but additional methods like class balancing and feature optimization need to be implemented for better class 1 detection.
+
+## Conclusion
+
++ Based on evaluations of all available machine learning models, Random Forest Classifiers with hyperparameter tuning performed best overall based on achieving the greatest accuracy of 0.69. Random Forest had a high rate of correctly classifying Non-Potable Water as indicated by the recall score of 0.88 and F1-score of 0.78. Therefore, Random Forest is reliable when identifying Non-Potable Water and could potentially serve as one of the best algorithms when predicting Non-Potable Water.
+
++ Conversely, when focusing on class 1, Potable Water, the tuned SVM model yielded more balanced results than the Random Forest Classifier. Although SVM's accuracy was slightly lower than that of Random Forest, SVM achieved better recall for the positive class than Random Forest and is more effective at correctly identifying Potable Water samples. This can be very significant for use cases where using false negatives could be problematic. In summary, the SVM can provide a good balance between precision and recall between both classes.
+
++ For all models, a difficulty in detecting class 1 as potable water resulted in a low recall for class 1 across all models. Thus, there may be an imbalance of data between classes or an overlap in the feature values of the two classes. There are also several improvements that could improve the performance of models going forward including the use of SMOTE, class weighting or additional feature engineering. In general, Random Forest and SVM were the best models, with Random Forest excelling at accuracy while SVM had the highest recall.
+
+
+| Model                       | Accuracy | Precision(0) | Precision(1) | Recall(0) | Recall(1) | F1-score(0) | F1-score(1) |
+|----------------------------|----------|--------------|--------------|-----------|-----------|-------------|-------------|
+| Logistic Regression         | 0.65     | 0.69         | 0.54         | 0.82      | 0.36      | 0.75        | 0.43        |
+| KNN Classifier             | 0.64     | 0.67         | 0.52         | 0.78      | 0.38      | 0.72        | 0.44        |
+| Gaussian Naive Bayes       | 0.61     | 0.66         | 0.49         | 0.74      | 0.40      | 0.69        | 0.44        |
+| Decision Tree Classifier   | 0.58     | 0.68         | 0.44         | 0.62      | 0.51      | 0.65        | 0.47        |
+| Random Forest Classifier   | 0.67     | 0.70         | 0.60         | 0.85      | 0.38      | 0.77        | 0.46        |
+| Tuned SVM (Best Params)    | 0.67     | 0.71         | 0.56         | 0.79      | 0.46      | 0.75        | 0.51        |
+| Tuned Random Forest        | 0.69     | 0.70         | 0.65         | 0.88      | 0.37      | 0.78        | 0.47        |
+
+
+
+
+
+
+
+
+
+
 
 
 
